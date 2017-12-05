@@ -178,6 +178,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Cornford\Googlmapper\MapperServiceProvider::class,
 
     ],
 
@@ -228,6 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Html' => Spatie\Html\Facades\Html::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
         'InfluxDB' => TrayLabs\InfluxDB\Facades\InfluxDB::class,
     ],
 

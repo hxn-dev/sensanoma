@@ -29,9 +29,10 @@
                 </span>
                 <span class="progress-description"> Zone:
                     <a href="{{ route('zone.show', $node->zone->id) }}">{{ $node->zone->name }}</a>
+                    / Created by: <a href="{{ route('account.show', $node->account->id) }}">{{ $node->account->name }}</a>
                 </span>
-                <span class="progress-description"> Created by:
-                    <a href="{{ route('account.show', $node->account->id) }}">{{ $node->account->name }}</a>
+                <span class="progress-description"> Sensornode type:
+                    {{ $node->type['name'] }}
                 </span>
                 </div>
                 <!-- /.info-box-content -->

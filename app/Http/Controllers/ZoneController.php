@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ZoneRequest;
 use App\Models\Zone;
 use Illuminate\Support\Facades\Auth;
+use Mapper;
 
 class ZoneController extends Controller
 {
@@ -28,6 +29,10 @@ class ZoneController extends Controller
      */
     public function create()
     {
+        Mapper::map(0, 0, ['locate' => true,
+            'eventBeforeLoad' => 'makePolygon(map);',
+            'zoom' => 18]);
+
         $areas = Auth::user()->account->areas()->get()->pluck('name', 'id');
 
         return view('zone.create', compact('areas'));
@@ -67,6 +72,7 @@ class ZoneController extends Controller
      */
     public function edit(Zone $zone)
     {
+
         $this->authorize('view', $zone);
         $areas = Auth::user()->account->areas()->get()->pluck('name', 'id');
 

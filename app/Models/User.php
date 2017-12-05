@@ -9,7 +9,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 class User extends Authenticatable
 {
     use Notifiable;
-    use LaratrustUserTrait;
+    use LaratrustUserTrait; // Permission problems
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'account_id'
+        'name', 'email', 'avatar', 'password', 'account_id'
     ];
 
     /**

@@ -3,13 +3,16 @@
 @section('title')
     Sensanoma
 @stop
-
+@section('css')
+    <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}" />
+@stop
 @section('content_header')
     @include('layouts.flash')
     <h1>Dashboard</h1>
 @stop
 
 @section('content')
+<div class="row">
     <div class="col-md-12">
         <div class="col-lg-6 col-xs-6">
             <!-- small box -->
@@ -116,7 +119,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
 @stop
 

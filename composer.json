@@ -10,12 +10,14 @@
         "consoletvs/charts": "5.*",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
+        "intervention/image": "^2.4",
         "jeroennoten/laravel-adminlte": "^1.22",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "santigarcor/laratrust": "5.0.*",
         "spatie/laravel-html": "^2.10",
-        "tray-labs/laravel-influxdb": "^1.0"
+        "tray-labs/laravel-influxdb": "^1.0",
+        "cornford/googlmapper": "2.*"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

@@ -33,5 +33,45 @@
             <br>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-10 col-xs-12 col-md-offset-3 col-sm-offset-1">
+            <h2 class="text-center">Account users</h2>
+        </div>
+    </div>
+    <div class='row'>
+            <div class="col-md-12">
+                @foreach($viewers as $viewer)
+                    @if(!$viewer->hasRole('admin'))
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="info-box">
+                                <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
+                            <div class="info-box-content">
+                                <span>
+                                    <h4>{{ $viewer->name }}</h4>
+                                </span>
+                                <div class="col-md-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-8">
+                                        <span>
+                                            <h5>Created in: {{  Carbon\Carbon::parse($viewer->created_at)->toFormattedDateString()  }}</h5>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-4">
+                                        <span>
+                                            {{ html()->form('DELETE', route('viewer.destroy', $viewer->id ))->open() }}
+
+                                            {{ html()->submit('Delete')->class('btn btn-danger pull-right') }}
+
+                                            {{ html()->form()->close() }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
 
 @stop

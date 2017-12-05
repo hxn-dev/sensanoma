@@ -10,7 +10,8 @@
 @stop
 
 @section('content')
-<div class="row">
+    @include('layouts.editPolygon')
+    <div class="row">
     {{ html()->form('PUT', route('zone.update', $zone))->open() }}
     <div class="col-md-12">
         {{ html()->submit('Update')->class('btn btn-primary pull-right hidden-lg hidden-md hidden-sm') }}
@@ -45,21 +46,17 @@
                             </tr>
                             <tr>
                                 <td>1.</td>
-                                <td>Find the zone you want to select</td>
+                                <td>Move each bound to each edge of the desired zone</td>
                             </tr>
                             <tr>
                                 <td>2.</td>
-                                <td>Click on each edge of the desired zone</td>
-                            </tr>
-                            <tr>
-                                <td>3.</td>
-                                <td>Connect the last line to the first one to close the selected zone</td>
+                                <td>Click on the grey bounds to create a new bound if necessary</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            <div style="display: none" id="area"></div>
+            <div id="area"></div>
         </div>
         <div class="form-group">
             {{ html()->submit('Update')->class('btn btn-primary pull-right') }}
@@ -70,10 +67,8 @@
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ URL::asset('js/polygon/make.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_KEY') }}&libraries=drawing" async
             defer></script>
-    <script>window.onload = function() {makePolygon();};</script>
 
 @stop
 

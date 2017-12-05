@@ -4,6 +4,9 @@
     @include('layouts.flash')
     <h1>Edit account</h1>
 @stop
+@section('css')
+    <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}" />
+@stop
 
 @section('content')
     {{ html()->form('PUT', route('account.update', $account))->open() }}

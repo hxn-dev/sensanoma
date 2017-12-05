@@ -58,7 +58,12 @@
                     </div>
                 </div>
 
-            <div id="area" style="display: none"></div>
+            <div id="area">
+
+                {!! Mapper::render() !!}
+
+            </div>
+
         </div>
         <div class="form-group">
 
@@ -71,9 +76,8 @@
 
 @section('js')
     <script type="text/javascript" src="{{ URL::asset('js/polygon/make.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_KEY') }}&libraries=drawing" async
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}&libraries=drawing" async
             defer></script>
-   <script>window.onload = function() {makePolygon();};</script>
 @stop
 
 

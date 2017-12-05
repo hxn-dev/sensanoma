@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountRequest;
 use App\Models\Account;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
@@ -17,7 +18,9 @@ class AccountController extends Controller
     public function index()
     {
         $account = Auth::user()->account;
-        return view('account.index', compact('account'));
+        $viewers = Auth::user()->account->users()->get();
+
+        return view('account.index', compact('account','viewers'));
     }
 
     /**

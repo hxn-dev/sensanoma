@@ -36,7 +36,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="info-box">
                 <a href="{{ route('zone.show', $zone) }}">
-                    <span class="info-box-icon bg-aqua"><i class="fa fa-fw fa-flag "></i></span>
+                    <span class="info-box-icon bg-aqua"><img id="iconmap" src="" style="margin-bottom: 10px;" alt=""></span>
                 </a>
                 <div class="info-box-content">
                     <span>

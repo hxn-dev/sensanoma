@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Mapper;
+use Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -21,6 +24,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Auth::user()->hasRole('admin'))
+        {
+
+            return view('home');
+
+        }
+        else
+        {
+            return view('userHome');
+        }
+
+
+
+
     }
 }

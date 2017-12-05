@@ -11,3 +11,51 @@
 #head_label{
     font-size: 1.8em;
 }
+.avatar{
+    width: 32px !important;
+    height: 32px !important;
+    margin-top: 10px !important;
+}
+.user-img{
+    width:90px !important;
+    height:90px !important;
+}
+.fa-thermometer-2:before, .fa-thermometer-half:before {
+    content: "\f2c9";
+    color: white;
+}
+.ion-waterdrop:before {
+    content: "\f25b";
+    color: white;
+}
+.ion-android-sunny:before {
+    content: "\f3b0";
+    color: white;
+}
+.fa-flash:before, .fa-bolt:before {
+    content: "\f0e7";
+    color: white;
+}
+.soil-colors{
+    background-color: #582900;
+    color: white;
+}
+.voltage-color{
+    background-color: #128CDC;
+    color: white;
+}
+.lumen-color{
+    background-color: gold;
+    color: white;
+}
+
+.warnings{
+    animation: blinker 1s linear infinite;
+}
+.warnings-danger{
+    color: #FA0008;
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% { opacity: 0.2; }
+}
