@@ -49,16 +49,9 @@ class Influx extends Command
     {
         $options = $this->initializeOptions($this->options());
         $measurements = $this->initializeMeasurements($options);
-        $crops = $this->initializeCrops($options);
 
-
-
-        $faker = Faker::create();
-        $carbon = Carbon::create();
         $dataPoints = new Collection();
 
-        $area = $faker->city;
-        $zone = $faker->streetName;
         $storage = new InfluxWriter($dataPoints);
 
         if (isset($options['wipe'])) {
@@ -68,22 +61,7 @@ class Influx extends Command
 
         $times = ($this->option('test')) ? 10 : 10000;
 
-        foreach ($measurements as $measurement) {
-            $now = $carbon->now();
-            for ($i = 1; $i < $times; $i++) {
-                $now->subMinutes(10);
-                $dataPoint = new DataPoint();
-                $dataPoint->setMeasurement($measurement);
-                $dataPoint->setValue(random_int(8, 15));
-                $dataPoint->setArea($area);
-                $dataPoint->setZone($zone);
-                $dataPoint->setAccountId(1);
-                $dataPoint->setSensornodeId(1);
-                $dataPoint->setCrop(array_random($crops));
-                $dataPoint->setTimestamp($now->timestamp);
-                $dataPoints->push($dataPoint);
-            }
-        }
+        $this->createDataPoint($measurements, $times, $options, $dataPoints);
 
         $storage->store();
         $this->info('The influxDB has been seeded!');
@@ -147,5 +125,32 @@ class Influx extends Command
         }
 
         return $crops;
+    }
+
+    private function createDataPoint($measurements, $times, $options, $dataPoints)
+    {
+        $faker = Faker::create();
+        $carbon = Carbon::create();
+        $crops = $this->initializeCrops($options);
+
+        $area = $faker->city;
+        $zone = $faker->streetName;
+
+        foreach ($measurements as $measurement) {
+            $now = $carbon->now();
+            for ($i = 1; $i < $times; $i++) {
+                $now->subMinutes(10);
+                $dataPoint = new DataPoint();
+                $dataPoint->setMeasurement($measurement);
+                $dataPoint->setValue(random_int(8, 15));
+                $dataPoint->setArea($area);
+                $dataPoint->setZone($zone);
+                $dataPoint->setAccountId(1);
+                $dataPoint->setSensornodeId(1);
+                $dataPoint->setCrop(array_random($crops));
+                $dataPoint->setTimestamp($now->timestamp);
+                $dataPoints->push($dataPoint);
+            }
+        }
     }
 }
