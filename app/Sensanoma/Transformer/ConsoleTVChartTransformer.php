@@ -3,8 +3,6 @@
 namespace App\Sensanoma\Transformer;
 
 
-use ConsoleTVs\Charts\Facades\Charts;
-
 class ConsoleTvChartTransformer
 {
     public function transform($datas, $chart)
