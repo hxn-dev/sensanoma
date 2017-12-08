@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegistered;
 use App\Models\User;
 use App\Models\Account;
 use App\Http\Controllers\Controller;
@@ -63,14 +64,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $account = Account::create(['name' => $data['name']]);
-
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'account_id' => $account->id,
-        ])->attachRole('admin');
+            'password' => bcrypt($data['password'])
+        ]);
 
+        event(new UserRegistered($user));
+
+        return $user;
     }
 }
