@@ -29,7 +29,11 @@ class SensorNodeController extends Controller
     public function create()
     {
         $zones = Auth::user()->account->zones()->get()->pluck('name', 'id');
-        $types = collect(config('sensanoma.sensor_node_types'))->pluck('name');
+        $types = collect(config('sensanoma.sensor_node_types'));
+
+        foreach ($types->keys() as $key) {
+            $types[$key] = $types[$key]['name'];
+        }
 
         return view('sensor_node.create', compact('zones', 'types'));
     }
@@ -70,8 +74,13 @@ class SensorNodeController extends Controller
     {
         $this->authorize('view', $sensorNode);
         $zones = Auth::user()->account->zones()->get()->pluck('name', 'id');
+        $types = collect(config('sensanoma.sensor_node_types'));
 
-        return view('sensor_node.edit', compact('sensorNode', 'zones'));
+        foreach ($types->keys() as $key) {
+            $types[$key] = $types[$key]['name'];
+        }
+
+        return view('sensor_node.edit', compact('sensorNode', 'zones', 'types'));
     }
 
     /**

@@ -28,7 +28,7 @@
         <div class="form-group">
             {{ html()->label('Area name','area_id') }}
 
-            {{ html()->select('area_id', $areas)->class('form-control') }}
+            {{ html()->select('area_id', $areas)->class('form-control')->value($zone->area->id) }}
         </div>
 
         <div class="form-group">

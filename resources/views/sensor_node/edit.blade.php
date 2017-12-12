@@ -18,9 +18,14 @@
         </div>
 
         <div class="form-group">
+            {{ html()->label('Sensor node type','type') }}
+            {{ html()->select('type', $types)->class('form-control')->value($sensorNode->types) }}
+        </div>
+
+        <div class="form-group">
             {{ html()->label('Zone name','zone_id') }}
 
-            {{ html()->select('zone_id', $zones)->class('form-control') }}
+            {{ html()->select('zone_id', $zones)->class('form-control')->value($sensorNode->zone->id) }}
         </div>
 
         <div class="form-group">
