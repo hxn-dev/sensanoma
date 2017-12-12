@@ -57,13 +57,13 @@ class Influx extends Command
             $storage->drop();
         }
 
-        $sensorNodes = SensorNode::all()->take(2);
+        $sensorNodes = SensorNode::all(); //->take(2);
 
         foreach($sensorNodes as $sensorNode) {
 
             foreach ($sensorNode->sensors() as $sensor) {
 
-                $times = ($this->option('test')) ? 10 : 10000;
+                $times = ($this->option('test')) ? 10 : 1000;
 
 
                 $now = $carbon->now();

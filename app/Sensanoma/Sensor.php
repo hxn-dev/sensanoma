@@ -9,6 +9,7 @@ use App\Sensanoma\Storage\QueryBuilder\InfluxQueryBuilder;
 use App\Sensanoma\Storage\Reader\InfluxReader;
 use App\Sensanoma\Transformer\ConsoleTvChartTransformer;
 use App\Sensanoma\Transformer\TransformerInterface;
+use Carbon\Carbon;
 
 class Sensor
 {
@@ -148,19 +149,19 @@ class Sensor
         return SensorNode::find($this->getSensorNodeId());
     }
 
-    public function getLastMonth()
+    public function getLastMonth(TransformerInterface $transformer)
     {
-        return $this->getData('30d', '2d', new ConsoleTvChartTransformer());
+        return $this->getData('30d', '2d', $transformer);
     }
 
-    public function getLastWeek()
+    public function getLastWeek($transformer)
     {
-        return $this->getData('7d', '12h', new ConsoleTvChartTransformer());
+        return $this->getData('7d', '12h', $transformer);
     }
 
-    public function getLastDay()
+    public function getLastDay($transformer)
     {
-        return $this->getData('1d', '1h', new ConsoleTvChartTransformer());
+        return $this->getData('1d', '1h', $transformer);
     }
 
     public function studlyName()
@@ -184,6 +185,33 @@ class Sensor
 
 
         return $transformer->transform($data);
+
+    }
+
+    public function getLastValue()
+    {
+        $reader = new InfluxReader();
+
+        $data = $reader->read(
+            (new InfluxQueryBuilder())
+                ->select(['time', 'value'])
+                ->from([$this->studlyName()])
+                ->order('time desc')
+                ->where("sensor_node = '{$this->sensorNode()->id}'")
+                ->limit(1)
+                ->build()
+        );
+
+        $result = $data->first()['values'][0];
+
+        $lastTimestamp = new Carbon($result[0]);
+
+        $result['age'] = $lastTimestamp->addDay(1) < Carbon::now() ?  'old' : 'current';
+
+        return $result;
+
+
+
 
     }
 
