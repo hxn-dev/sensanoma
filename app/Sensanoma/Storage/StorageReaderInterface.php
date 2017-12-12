@@ -3,5 +3,5 @@
 namespace App\Sensanoma\Storage;
 
 interface StorageReaderInterface {
-    public function read();
+    public function read($query);
 }

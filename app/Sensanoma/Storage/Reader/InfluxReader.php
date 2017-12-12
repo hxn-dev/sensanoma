@@ -14,19 +14,8 @@ class InfluxReader implements StorageReaderInterface
      * @param array $params
      * @return array|Collection
      */
-    public function read(Array $params = [])
+    public function read($query)
     {
-        $influxBuilder = new InfluxQueryBuilder();
-
-        $query = $influxBuilder
-            ->select($params['select'])
-            ->from($params['from'])
-            ->where($params['where'])
-            ->groupBy($params['groupBy'])
-            ->fill($params['fill'])
-            ->limit($params['limit'])
-            ->build();
-
         try{
             $query = InfluxDB::query($query);
         } catch (\Exception $e){

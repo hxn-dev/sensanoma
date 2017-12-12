@@ -3,26 +3,29 @@
 namespace App\Sensanoma\Transformer;
 
 
-class ConsoleTvChartTransformer
+class ConsoleTvChartTransformer implements TransformerInterface
 {
-    public function transform($datas, $chart)
+    public function transform($datas)
     {
         if(isset($datas['error'])) {
             return $datas['error'];
         }
+        $values = [];
+        $labels = [];
 
         foreach ($datas as $serie) {
-            $values = [];
-            $labels = [];
+
             foreach ($serie['values'] as $value) {
                 array_push($labels, \Carbon\Carbon::parse($value[0])->toDateString());
                 array_push($values, intval($value[1], 0));
             }
-            $chart->labels($labels);
-            $chart->dataset($serie['name'], $values);
+
         }
 
-        return $chart;
+        return [
+            'labels' => $labels,
+            'values' => $values
+        ];
     }
 
 }

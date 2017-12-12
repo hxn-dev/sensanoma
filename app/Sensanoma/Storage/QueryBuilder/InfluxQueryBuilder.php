@@ -11,6 +11,7 @@ class InfluxQueryBuilder
     protected $groupBy;
     protected $fill;
     protected $limit;
+    protected $orderBy;
 
     public function select(Array $fields)
     {
@@ -55,8 +56,13 @@ class InfluxQueryBuilder
         return $this;
     }
 
+    public function order($orderBy = null) {
+        ($orderBy) ? $this->orderBy = 'ORDER BY ' .$orderBy : $this->orderBy = '';
+        return $this;
+    }
+
     public function build()
     {
-        return trim(preg_replace("/ {2,}/", " ", "SELECT $this->select FROM $this->from $this->where $this->groupBy $this->fill $this->limit"));
+        return trim(preg_replace("/ {2,}/", " ", "SELECT $this->select FROM $this->from $this->where $this->groupBy $this->fill $this->orderBy $this->limit"));
     }
 }

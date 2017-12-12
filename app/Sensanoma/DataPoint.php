@@ -12,6 +12,23 @@ class DataPoint
     protected $crop;
     protected $measurement;
     protected $value;
+    protected $sensor;
+
+    /**
+     * @return mixed
+     */
+    public function getSensor()
+    {
+        return $this->sensor;
+    }
+
+    /**
+     * @param mixed $sensor
+     */
+    public function setSensor($sensor)
+    {
+        $this->sensor = $sensor;
+    }
 
     public function __construct(Array $points = [])
     {
