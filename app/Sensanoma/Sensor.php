@@ -8,6 +8,7 @@ use App\Models\SensorNode;
 use App\Sensanoma\Storage\QueryBuilder\InfluxQueryBuilder;
 use App\Sensanoma\Storage\Reader\InfluxReader;
 use App\Sensanoma\Transformer\ConsoleTvChartTransformer;
+use App\Sensanoma\Transformer\LastAverageResultTransformer;
 use App\Sensanoma\Transformer\TransformerInterface;
 use Carbon\Carbon;
 
@@ -169,18 +170,20 @@ class Sensor
         return studly_case($this->getName());
     }
 
-    public function getData($period, $group, TransformerInterface $transformer)
+    public function getData($period, $group, TransformerInterface $transformer, $limit = 0, $orderby = 'desc')
     {
         $reader = new InfluxReader();
 
         $data = $reader->read(
             (new InfluxQueryBuilder())
-            ->select(['mean(value)'])
-            ->from([$this->studlyName()])
-            ->where("time > now() - $period and sensor_node = '{$this->sensorNode()->id}'")
-            ->groupBy("time($group)")
-            ->fill('previous')
-            ->build()
+                ->select(['mean(value)'])
+                ->from([$this->studlyName()])
+                ->where("time > now() - $period and sensor_node = '{$this->sensorNode()->id}'")
+                ->groupBy("time($group)")
+                ->fill('previous')
+                ->limit($limit)
+                ->order($orderby)
+                ->build()
         );
 
 
@@ -214,6 +217,7 @@ class Sensor
 
 
     }
+
 
 
 }
