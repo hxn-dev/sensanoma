@@ -29,8 +29,9 @@ class SensorNodeController extends Controller
     public function create()
     {
         $zones = Auth::user()->account->zones()->get()->pluck('name', 'id');
+        $types = collect(config('sensanoma.sensor_node_types'))->pluck('name');
 
-        return view('sensor_node.create', compact('zones'));
+        return view('sensor_node.create', compact('zones', 'types'));
     }
 
     /**
@@ -101,4 +102,6 @@ class SensorNodeController extends Controller
 
         return redirect(route('sensor_node.index'))->with('success', 'The Sensor Node has been deleted');
     }
+
+
 }
