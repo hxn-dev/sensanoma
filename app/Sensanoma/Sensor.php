@@ -8,6 +8,7 @@ use App\Models\SensorNode;
 use App\Sensanoma\Storage\QueryBuilder\InfluxQueryBuilder;
 use App\Sensanoma\Storage\Reader\InfluxReader;
 use App\Sensanoma\Transformer\ConsoleTvChartTransformer;
+use App\Sensanoma\Transformer\LastAverageResultTransformer;
 use App\Sensanoma\Transformer\TransformerInterface;
 
 class Sensor
@@ -150,17 +151,17 @@ class Sensor
 
     public function getLastMonth()
     {
-        return $this->getData('30d', '2d', new ConsoleTvChartTransformer());
+        return $this->getData('30d', '30d', new LastAverageResultTransformer(), 1);
     }
 
     public function getLastWeek()
     {
-        return $this->getData('7d', '12h', new ConsoleTvChartTransformer());
+        return $this->getData('7d', '12h', new LastAverageResultTransformer(), 1);
     }
 
     public function getLastDay()
     {
-        return $this->getData('1d', '1h', new ConsoleTvChartTransformer());
+        return $this->getData('1d', '1h', new LastAverageResultTransformer(), 1);
     }
 
     public function studlyName()
@@ -168,24 +169,27 @@ class Sensor
         return studly_case($this->getName());
     }
 
-    public function getData($period, $group, TransformerInterface $transformer)
+    public function getData($period, $group, TransformerInterface $transformer, $limit = 0, $orderby = 'desc')
     {
         $reader = new InfluxReader();
 
         $data = $reader->read(
             (new InfluxQueryBuilder())
-            ->select(['mean(value)'])
-            ->from([$this->studlyName()])
-            ->where("time > now() - $period and sensor_node = '{$this->sensorNode()->id}'")
-            ->groupBy("time($group)")
-            ->fill('previous')
-            ->build()
+                ->select(['mean(value)'])
+                ->from([$this->studlyName()])
+                ->where("time > now() - $period and sensor_node = '{$this->sensorNode()->id}'")
+                ->groupBy("time($group)")
+                ->fill('previous')
+                ->limit($limit)
+                ->order($orderby)
+                ->build()
         );
 
 
         return $transformer->transform($data);
 
     }
+
 
 
 }
