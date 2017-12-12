@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Sensanoma\Sensor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class SensorNode extends Model
 {
@@ -22,4 +24,36 @@ class SensorNode extends Model
     {
         return config('sensanoma.sensor_node_types')[$type];
     }
+
+    public function sensors()
+    {
+        $sensors = new Collection();
+
+        foreach ($this->type['sensors'] as $sensor) {
+
+            $sensorObject = new Sensor($sensor);
+            $sensorObject->setSensorNodeId($this->id);
+
+            $sensors->push($sensorObject);
+
+        }
+
+        return $sensors;
+    }
+
+    public function sensor($sensorName)
+    {
+        foreach ($this->type['sensors'] as $sensor) {
+
+            if ($sensor['name'] == $sensorName) {
+                $sensorObject = new Sensor($sensor);
+                $sensorObject->setSensorNodeId($this->id);
+                return $sensorObject;
+            }
+        }
+
+        return null;
+    }
+
+
 }
