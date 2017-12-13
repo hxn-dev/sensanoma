@@ -19,7 +19,7 @@
 
         <div class="form-group">
             {{ html()->label('Sensor node type','type') }}
-            {{ html()->select('type', $types)->class('form-control')->value($sensorNode->types) }}
+            {{ html()->select('type', $types)->class('form-control')->value($sensorNode->getNodeTypeKey($sensorNode->type['name'])) }}
         </div>
 
         <div class="form-group">

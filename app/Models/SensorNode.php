@@ -25,6 +25,16 @@ class SensorNode extends Model
         return config('sensanoma.sensor_node_types')[$type];
     }
 
+    public function getNodeTypeKey($name)
+    {
+        $types = config('sensanoma.sensor_node_types');
+
+        foreach($types as $key => $value) {
+            if ($value['name'] == $name)
+                return $key;
+        }
+    }
+
     public function sensors()
     {
         $sensors = new Collection();
@@ -53,6 +63,11 @@ class SensorNode extends Model
         }
 
         return null;
+    }
+
+    public function getValue($sensorName)
+    {
+        return $this->sensor($sensorName)->getLastValue();
     }
 
 

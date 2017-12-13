@@ -55,6 +55,22 @@
                     <span class="progress-description"> Sensornode type:
                         {{ $sensorNode->type['name'] }}
                     </span>
+                    <span>Avaiable sensors :</span>
+                    <ul class="nav nav-stacked">
+                        @foreach($sensorNode->sensors() as $sensor)
+                            <li>
+                                <a href="#"><i class="fa fa-asterisk"></i> &nbsp; {{ $sensor->getName() }}
+                                    @if(isset($sensorNode->getValue($sensor->getName())['value']))
+                                        <span class="pull-right badge {{ ($sensorNode->getValue($sensor->getName())['age'] !== 'current') ? 'bg-red' : 'bg-blue'}}">
+                                            {{ $sensorNode->getValue($sensor->getName())['value'] }}
+                                        </span>
+                                    @else
+                                        <span class="pull-right badge bg-red">E</span>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
                 <!-- /.info-box-content -->
             </div>
