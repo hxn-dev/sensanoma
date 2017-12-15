@@ -55,25 +55,25 @@
                     <span class="progress-description"> Sensornode type:
                         {{ $sensorNode->type['name'] }}
                     </span>
-                    <span>Avaiable sensors :</span>
-                    <ul class="nav nav-stacked">
-                        @foreach($sensorNode->sensors() as $sensor)
-                            <li>
-                                <a href="#"><i class="fa fa-asterisk"></i> &nbsp; {{ $sensor->getName() }}
-                                    @if(isset($sensorNode->getValue($sensor->getName())['value']))
-                                        <span class="pull-right badge {{ ($sensorNode->getValue($sensor->getName())['age'] !== 'current') ? 'bg-red' : 'bg-blue'}}">
-                                            {{ $sensorNode->getValue($sensor->getName())['value'] }}
-                                        </span>
-                                    @else
-                                        <span class="pull-right badge bg-red">E</span>
-                                    @endif
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
                 </div>
                 <!-- /.info-box-content -->
             </div>
+            <h3>Avaiable sensors :</h3>
+            <ul class="nav nav-stacked nav-pills">
+                @foreach($sensorNode->sensors() as $sensor)
+                    <li>
+                        <a href="#"><i class="fa fa-asterisk"></i> &nbsp; {{ $sensor->getName() }} <div class="inline text-danger">{{ ($sensorNode->getValue($sensor->getName())['age'] == 'current') ? '' : '[outdated]'}}</div>
+                            @if(isset($sensorNode->getValue($sensor->getName())['value']))
+                                <span class="pull-right badge {{ ($sensorNode->getValue($sensor->getName())['age'] !== 'current') ? 'bg-red' : 'bg-blue'}}">
+                                            {{ $sensorNode->getValue($sensor->getName())['value'] }}
+                                        </span>
+                            @else
+                                <span class="pull-right badge bg-red">No Data</span>
+                            @endif
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
             <br>
             <div class="row">
                 <div class="hidden-lg hidden-md hidden-sm col-xs-6">
