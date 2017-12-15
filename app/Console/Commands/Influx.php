@@ -63,7 +63,7 @@ class Influx extends Command
 
             foreach ($sensorNode->sensors() as $sensor) {
 
-                $times = ($this->option('test')) ? 10 : 1000;
+                $times = ($this->option('test')) ? 5 : 1000;
 
 
                 $now = $carbon->now();

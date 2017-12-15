@@ -10,9 +10,12 @@ use TrayLabs\InfluxDB\Facades\InfluxDB;
 
 class InfluxReader implements StorageReaderInterface
 {
+
     /**
-     * @param array $params
+     * @param $query
      * @return array|Collection
+     * @throws \InfluxDB\Exception
+     * @throws \TrayLabs\InfluxDB\Facades\Exception
      */
     public function read($query)
     {
