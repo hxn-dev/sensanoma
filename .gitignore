@@ -53,5 +53,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+!/public/uploads/avatars/default.jpg
 /public/uploads/avatars/
 /vendor/
