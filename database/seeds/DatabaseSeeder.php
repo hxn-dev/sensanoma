@@ -28,8 +28,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->command->info('The database has been seeded');
-        Artisan::call('influx:seed');
-        $this->command->info('The Influx database has been seeded');
 
     }
 
